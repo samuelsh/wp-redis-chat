@@ -70,6 +70,60 @@ if(!class_exists('WP_Plugin_Template'))
 			return $links;
 		}
 
+        // Shortcodes
+        function show_chat() {
+            return '
+<html>
+<head>
+  <meta http-equiv="content-type" content="text/html;charset=utf-8" />
+  <meta name="viewport" content="width=device-width">
+  <!-- load JQuery -->
+<script type="text/javascript" src="'.plugins_url("lib/jquery-1.8.3.min.js",__FILE__).'"></script>
+  <script type="text/javascript" src="'.plugins_url("lib/jquery.ba-bbq.min.js",__FILE__).'"></script>
+  <script type="text/javascript" src="'.plugins_url("lib/jquery-ui.js",__FILE__).'"></script>
+  <script type="text/javascript" src="'.plugins_url("lib/jquery-url.js",__file__).'"></script>
+  <link rel="stylesheet" type="text/css" href="'.plugins_url("lib/jquery-ui.css",__FILE__).'">
+  
+  <!-- Fix $.ajax for IE8,9 -->
+  <script type="text/javascript" src=".'.plugins_url("lib/xdomainrequest.js",__FILE__).'"></script>
+
+  <!-- Fix placeholders for several Browsers -->
+  <script type="text/javascript" src="'.plugins_url("lib/jquery.placeholder.js",__FILE__).'"></script>
+  
+  <!-- Application scripts -->
+  <script src="'.plugins_url("js/langs.js",__FILE__).'"></script>
+  <script src="'.plugins_url("js/conf.js",__FILE__).'"></script>
+  <script src="'.plugins_url("js/app.js",__FILE__).'"></script>
+  <script src="'.plugins_url("js/chat_app.js",__FILE__).'"></script>
+  <script src="'.plugins_url("js/plugins.js",__file__).'"></script>
+  <!-- Emotions -->
+  <link href="'.plugins_url("lib/kof-emoticons/emoticons.css",__FILE__).'" rel="stylesheet" type="text/css"/>
+  <script type="text/javascript" src="'.plugins_url("lib/kof-emoticons/emoticons.js",__FILE__).'"></script>
+
+  <link rel="stylesheet" type="text/css" href="'.plugins_url("style.css",__FILE__).'">
+  <script>window["_GOOG_TRANS_EXT_VER"] = "1";</script>
+</head>
+<body dir="ltr">
+  <div class="btns">
+    <button class="btn " id="askBtn" data-tr="askBtn" data-tr-place-tag="span">***</button>
+    <button class="btn " id="helpBtn" data-tr="helpBtn" data-tr-place-tag="span">:) ?</button>
+  </div>
+  <div id="askForm">
+    <input type="text" placeholder="***" id="name" class="ui-widget ui-corner-all ui-button-text-only"  data-tr="nameInput" data-tr-place-attr="placeholder" />
+    <input type="text" placeholder="***" id="from" class="ui-widget ui-corner-all ui-button-text-only" data-tr="fromInput" data-tr-place-attr="placeholder"/>
+    <textarea placeholder="***" id="message" class="ui-widget ui-corner-all ui-button-text-only" data-tr="messageInput" data-tr-place-attr="placeholder"></textarea>
+    <div class="btns">
+      <button class="btn sendBtn" data-tr="sendBtn" data-tr-place-tag="span">***</button>
+      <button class="btn cancelBtn" data-tr="cancelBtn" data-tr-place-tag="span">***</button>
+    </div>
+  </div>
+  <div id="questionsList">
+  </div>
+  <div id="helpDialog" title="Help"></div> 
+</body>
+</html>';
+     }
+
 
 	} // END class WP_Plugin_Template
 } // END if(!class_exists('WP_Plugin_Template'))
@@ -80,7 +134,9 @@ if(class_exists('WP_Plugin_Template'))
 	register_activation_hook(__FILE__, array('WP_Plugin_Template', 'activate'));
 	register_deactivation_hook(__FILE__, array('WP_Plugin_Template', 'deactivate'));
 
-	// instantiate the plugin class
+    add_shortcode( 'chat', array('WP_Plugin_Template','show_chat' ));
+
+    // instantiate the plugin class
 	$wp_plugin_template = new WP_Plugin_Template();
 
 }
