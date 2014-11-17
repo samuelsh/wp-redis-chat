@@ -1,13 +1,12 @@
-webdis-chat
+webdis-chat Wordpress plugin
 ===========
 
 Simple chat using JavaScript + JQuery as client side and Webdis + Redis as only backends (no backend code).
 
-Install redis:
-http://redis.io/topics/quickstart
+HOWTO:
+1. Install the plugin 
+2. Create new page
+3. Create shortcode [chat]
+4. That’s it :)
 
-Install webdis:
-http://webd.is/
 
-Configure js/conf.js host and webdis parameters.
-Serve index.html and its dependencies (javascript files) using any possible way (no backend needed).
