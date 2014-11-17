@@ -1,15 +1,15 @@
 <?php
 /*
-Plugin Name: WP Plugin Template
-Plugin URI: https://github.com/fyaconiello/wp_plugin_template
-Description: A simple wordpress plugin template
+Plugin Name: WP Redis Chat
+Plugin URI: https://github.com/samuelsh/wp-redis-chat.git
+Description: A simple redis chat plugin
 Version: 1.0
-Author: Francis Yaconiello
-Author URI: http://www.yaconiello.com
+Author: Dogen
+Author URI: https://github.com/samuelsh
 License: GPL2
 */
 /*
-Copyright 2012  Francis Yaconiello  (email : francis@yaconiello.com)
+Copyright 2014  Dogen  (email : samuel.sh79@gmail.com)
 
 This program is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License, version 2, as
