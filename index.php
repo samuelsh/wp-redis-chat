@@ -29,7 +29,9 @@ if(!class_exists('WP_Plugin_Template'))
 {
 	class WP_Plugin_Template
 	{
-		/**
+
+        public $username = null;
+        /**
 		 * Construct the plugin object
 		 */
 		public function __construct()
@@ -73,12 +75,15 @@ if(!class_exists('WP_Plugin_Template'))
         // Shortcodes
         function show_chat($atts, $content=null) {
 
+            $user = wp_get_current_user();
+            $username = $user->user_login;
+
             extract(shortcode_atts(array(
                   'room' => "testroom"
                ), $atts));
 
             $room = get_option('global_chat_room');
-            return '<div style="display:block;"><iframe width="310" height="500" frameborder="0" src="http://we.kab.tv/?label='.$room.'&auto_approve=true&static_form=true" scrolling="yes" marginwidth="0" marginheight="0"></iframe></div>';
+            return '<div style="display:block;"><iframe width="310" height="500" frameborder="0" src="http://we.kab.tv/?label='.$room.'&auto_approve=true&static_form=true&from_text='.$username.'&name_text='.$username.'" scrolling="yes" marginwidth="0" marginheight="0"></iframe></div>';
        }
 
 
