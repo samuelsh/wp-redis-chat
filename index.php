@@ -2,7 +2,7 @@
 /*
 Plugin Name: WP Redis Chat
 Plugin URI: https://github.com/samuelsh/wp-redis-chat.git
-Description: A simple redis chat plugin
+Description: A simple redis chat client plugin
 Version: 1.0
 Author: Dogen
 Author URI: https://github.com/samuelsh
@@ -87,7 +87,24 @@ if(!class_exists('WP_Plugin_Template'))
        }
 
 
-	} // END class WP_Plugin_Template
+        function set_user_logged_in($user_login, $user) {
+
+            update_user_meta($user->ID, 'logged_in', true);
+        }
+
+
+        function set_user_logged_out() {
+
+            $user = wp_get_current_user();
+            update_user_meta($user->ID, 'logged_in', false);
+        }
+
+
+        function get_all_logged_in_users() {
+
+            $users_list;
+        }
+    } // END class WP_Plugin_Template
 } // END if(!class_exists('WP_Plugin_Template'))
 
 if(class_exists('WP_Plugin_Template'))
@@ -100,6 +117,8 @@ if(class_exists('WP_Plugin_Template'))
         add_option('global_chat_room', 'chatroom'.rand());
 
     add_shortcode( 'chat', array('WP_Plugin_Template','show_chat' ));
+    add_action('clear_auth_cookie', 'set_user_logged_out', 10);
+    add_action('wp_login', 'set_user_logged_in', 10, 2);
 
     // instantiate the plugin class
 	$wp_plugin_template = new WP_Plugin_Template();
