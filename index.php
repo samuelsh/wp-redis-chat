@@ -75,15 +75,26 @@ if(!class_exists('WP_Plugin_Template'))
         // Shortcodes
         function show_chat($atts, $content=null) {
 
-            $user = wp_get_current_user();
-            $username = $user->user_login;
+            $userlist="";
+            $username = wp_get_current_user()->user_login;
+            $users = WP_Plugin_Template::get_all_logged_in_users();
+
+            if(!$username)
+                $username = "User".rand(1,1000);
 
             extract(shortcode_atts(array(
                   'room' => "testroom"
                ), $atts));
 
+            foreach( $users as $user) {
+
+                $userlist .= '<span>' . esc_html( $user->display_name ) . '</span>';
+
+            }
+
             $room = get_option('global_chat_room');
-            return '<div style="display:block;"><iframe width="310" height="500" frameborder="0" src="http://we.kab.tv/?label='.$room.'&auto_approve=true&static_form=true&from_text='.$username.'&name_text='.$username.'" scrolling="yes" marginwidth="0" marginheight="0"></iframe></div>';
+            $users_iframe = '<iframe width="150" height="500" frameborder="1" src="http://we.kab.tv/users.html?label='.$room.'&link_pattern=http://www.google.com%2Fsearch%3Fq%3DX" scrolling="yes" marginwidth="10px" marginheight="10px"></iframe>';
+            return '<div style="display:block;"><div>'.$users_iframe.'<iframe width="310" height="500" frameborder="0" src="http://we.kab.tv/?label='.$room.'&auto_approve=true&static_form=true&from_text='.$username.'&name_text='.$username.'" scrolling="yes" marginwidth="0" marginheight="0"></iframe></div><div>'.$userlist.'</div></div>';
        }
 
 
@@ -100,9 +111,13 @@ if(!class_exists('WP_Plugin_Template'))
         }
 
 
-        function get_all_logged_in_users() {
+        public static function get_all_logged_in_users() {
 
-            $users_list;
+            $users_list = get_users( array('meta_query' => array( 'relation', array('meta_key' => 'logged_in', 'meta_value' => 'true'))));
+        //$users_list = get_users();
+
+
+            return $users_list;
         }
     } // END class WP_Plugin_Template
 } // END if(!class_exists('WP_Plugin_Template'))
@@ -114,7 +129,9 @@ if(class_exists('WP_Plugin_Template'))
 	register_deactivation_hook(__FILE__, array('WP_Plugin_Template', 'deactivate'));
 
     if(!get_option('global_chat_room'))
-        add_option('global_chat_room', 'chatroom'.rand());
+        add_option('global_chat_room', 'bb_dating_website_chatroom'.rand());
+    else if(strpos(get_option('global_chat_room'),'bb_dating_website_chatroom') !== true )
+        update_option('global_chat_room', 'bb_dating_website_chatroom'.rand());
 
     add_shortcode( 'chat', array('WP_Plugin_Template','show_chat' ));
     add_action('clear_auth_cookie', 'set_user_logged_out', 10);
