@@ -130,7 +130,7 @@ if(class_exists('WP_Plugin_Template'))
 
     if(!get_option('global_chat_room'))
         add_option('global_chat_room', 'bb_dating_website_chatroom'.rand());
-    else if(strpos(get_option('global_chat_room'),'bb_dating_website_chatroom') !== true )
+    if(strpos(get_option('global_chat_room'),'bb_dating_website_chatroom') === false )
         update_option('global_chat_room', 'bb_dating_website_chatroom'.rand());
 
     add_shortcode( 'chat', array('WP_Plugin_Template','show_chat' ));
