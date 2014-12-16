@@ -88,7 +88,7 @@ if(!class_exists('WP_Plugin_Template'))
 
             foreach( $users as $user) {
 
-                $userlist .= '<span>' . esc_html( $user->display_name ) . '</span>';
+                $userlist .= '<span>' . esc_html( $user->display_name ) . '<br/></span>';
 
             }
 
@@ -100,22 +100,23 @@ if(!class_exists('WP_Plugin_Template'))
 
         function set_user_logged_in($user_login, $user) {
 
-            update_user_meta($user->ID, 'logged_in', true);
+            if(!update_user_meta($user->ID, 'logged_in', 'true'))
+            	wp_die("Failed to add usermeta ", "Fatal");
         }
 
 
         function set_user_logged_out() {
 
             $user = wp_get_current_user();
-            update_user_meta($user->ID, 'logged_in', false);
+            if(!update_user_meta($user->ID, 'logged_in', 'false'))
+            	wp_die("Failed to add usermeta ", "Fatal");
+            	 
         }
 
 
         public static function get_all_logged_in_users() {
 
-            $users_list = get_users( array('meta_query' => array( 'relation', array('meta_key' => 'logged_in', 'meta_value' => 'true'))));
-        //$users_list = get_users();
-
+            $users_list = get_users( array('meta_key' => 'logged_in', 'meta_value' => 'true'));
 
             return $users_list;
         }
@@ -134,8 +135,8 @@ if(class_exists('WP_Plugin_Template'))
         update_option('global_chat_room', 'bb_dating_website_chatroom'.rand());
 
     add_shortcode( 'chat', array('WP_Plugin_Template','show_chat' ));
-    add_action('clear_auth_cookie', 'set_user_logged_out', 10);
-    add_action('wp_login', 'set_user_logged_in', 10, 2);
+    add_action('clear_auth_cookie', array('WP_Plugin_Template','set_user_logged_out'), 10);
+    add_action('wp_login', array('WP_Plugin_Template','set_user_logged_in'), 10, 2);
 
     // instantiate the plugin class
 	$wp_plugin_template = new WP_Plugin_Template();
