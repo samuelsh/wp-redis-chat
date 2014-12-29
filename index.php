@@ -37,12 +37,12 @@ if(!class_exists('WP_Plugin_Template'))
 		public function __construct()
 		{
 			// Initialize Settings
-			require_once(sprintf("%s/settings.php", dirname(__FILE__)));
-			$WP_Plugin_Template_Settings = new WP_Plugin_Template_Settings();
+			//require_once(sprintf("%s/settings.php", dirname(__FILE__)));
+			//$WP_Plugin_Template_Settings = new WP_Plugin_Template_Settings();
 
 			// Register custom post types
-			require_once(sprintf("%s/post-types/post_type_template.php", dirname(__FILE__)));
-			$Post_Type_Template = new Post_Type_Template();
+			//require_once(sprintf("%s/post-types/post_type_template.php", dirname(__FILE__)));
+			//$Post_Type_Template = new Post_Type_Template();
 
 			$plugin = plugin_basename(__FILE__);
 			add_filter("plugin_action_links_$plugin", array( $this, 'plugin_settings_link' ));
@@ -67,9 +67,9 @@ if(!class_exists('WP_Plugin_Template'))
 		// Add the settings link to the plugins page
 		function plugin_settings_link($links)
 		{
-			$settings_link = '<a href="options-general.php?page=wp_plugin_template">Settings</a>';
-			array_unshift($links, $settings_link);
-			return $links;
+			//$settings_link = '<a href="options-general.php?page=wp_plugin_template">Settings</a>';
+			//array_unshift($links, $settings_link);
+			//return $links;
 		}
 
         // Shortcodes
@@ -93,24 +93,31 @@ if(!class_exists('WP_Plugin_Template'))
             }
 
             $room = get_option('global_chat_room');
-            $users_iframe = '<iframe width="150" height="500" frameborder="1" src="http://we.kab.tv/users.html?label='.$room.'&link_pattern=http://www.google.com%2Fsearch%3Fq%3DX" scrolling="yes" marginwidth="10px" marginheight="10px"></iframe>';
-            return '<div style="display:block;"><div>'.$users_iframe.'<iframe width="310" height="500" frameborder="0" src="http://we.kab.tv/?label='.$room.'&auto_approve=true&static_form=true&from_text='.$username.'&name_text='.$username.'" scrolling="yes" marginwidth="0" marginheight="0"></iframe></div><div>'.$userlist.'</div></div>';
+            $users_iframe = '<iframe id="users" width="150" height="500" frameborder="1" src="http://we.kab.tv/users.html?label='.$room.
+            '&auto_approve=true&from_text='.$username.'" scrolling="yes" marginwidth="10px" marginheight="10px"></iframe>';
+            return 	'<div style="display:block;"><div>'.$users_iframe.
+            		'<iframe width="310" height="500" frameborder="0" src="http://we.kab.tv/?label='.$room.
+            		'&auto_approve=true&static_form=true&from_text='.$username.'&name_text='.$username.
+            		'" scrolling="yes" marginwidth="0" marginheight="0"></iframe></div><div>'.$userlist.
+            		'</div></div>';
        }
 
 
         function set_user_logged_in($user_login, $user) {
 
-            if(!update_user_meta($user->ID, 'logged_in', 'true'))
-            	wp_die("Failed to add usermeta ", "Fatal");
+            if(get_user_meta($user->ID, "logged_in", true) != "true")
+                if(!update_user_meta($user->ID, 'logged_in', 'true'))
+                    wp_die("Failed to add usermeta ", "Fatal");
         }
 
 
         function set_user_logged_out() {
 
             $user = wp_get_current_user();
-            if(!update_user_meta($user->ID, 'logged_in', 'false'))
-            	wp_die("Failed to add usermeta ", "Fatal");
-            	 
+            if(get_user_meta($user->ID, "logged_in", true) != "false")
+                if(!update_user_meta($user->ID, 'logged_in', 'false'))
+                    wp_die("Failed to add usermeta ", "Fatal");
+
         }
 
 
