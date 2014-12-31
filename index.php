@@ -8,6 +8,7 @@ Author: Dogen
 Author URI: https://github.com/samuelsh
 License: GPL2
 */
+
 /*
 Copyright 2014  Dogen  (email : samuel.sh79@gmail.com)
 
@@ -45,7 +46,7 @@ if(!class_exists('WP_Plugin_Template'))
 			//$Post_Type_Template = new Post_Type_Template();
 
 			$plugin = plugin_basename(__FILE__);
-			add_filter("plugin_action_links_$plugin", array( $this, 'plugin_settings_link' ));
+			//add_filter("plugin_action_links_$plugin", array( $this, 'plugin_settings_link' ));
 		} // END public function __construct
 
 		/**
@@ -67,9 +68,9 @@ if(!class_exists('WP_Plugin_Template'))
 		// Add the settings link to the plugins page
 		function plugin_settings_link($links)
 		{
-			//$settings_link = '<a href="options-general.php?page=wp_plugin_template">Settings</a>';
-			//array_unshift($links, $settings_link);
-			//return $links;
+			$settings_link = '<a href="options-general.php?page=wp_plugin_template">Settings</a>';
+			array_unshift($links, $settings_link);
+			return $links;
 		}
 
         // Shortcodes
