@@ -99,7 +99,8 @@ if(!class_exists('WP_Plugin_Template'))
             return 	'<div style="display:block;"><div>'.$users_iframe.
             		'<iframe width="310" height="500" frameborder="0" src="http://we.kab.tv/?label='.$room.
             		'&auto_approve=true&static_form=true&from_text='.$username.'&name_text='.$username.
-            		'" scrolling="yes" marginwidth="0" marginheight="0"></iframe></div><div>'.$userlist.
+                    '&css=http://2bb1.net/wp-content/themes/lovestory/nedchat16.10/style/chatstyle.css
+                    " scrolling="yes" marginwidth="0" marginheight="0"></iframe></div><div>'.$userlist.
             		'</div></div>';
        }
 
