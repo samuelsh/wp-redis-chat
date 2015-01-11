@@ -96,7 +96,7 @@ if(!class_exists('WP_Plugin_Template'))
             $room = get_option('global_chat_room');
             $users_iframe = '<iframe id="users" width="150" height="500" frameborder="1" src="http://we.kab.tv/users.html?label='.$room.
             '&auto_approve=true&from_text='.$username.'" scrolling="yes" marginwidth="10px" marginheight="10px"></iframe>';
-            return 	'<div style="display:block;"><div>'.$users_iframe.
+            return 	'<div style="display:block;"><div>'.get_avatar(wp_get_current_user()->ID,80).'</div><div>'.$users_iframe.
             		'<iframe width="310" height="500" frameborder="0" src="http://we.kab.tv/?label='.$room.
             		'&auto_approve=true&static_form=true&from_text='.$username.'&name_text='.$username.
                     '&css=http://2bb1.net/wp-content/themes/lovestory/nedchat16.10/style/chatstyle.css
