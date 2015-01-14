@@ -79,7 +79,7 @@ if(!class_exists('WP_Plugin_Template'))
             $userlist="";
             $username = wp_get_current_user()->user_login;
             $users = WP_Plugin_Template::get_all_logged_in_users();
-
+            $user_link = get_site_url()."/chat/".wp_get_current_user()->ID;
             if(!$username)
                 $username = "User".rand(1,1000);
 
@@ -95,8 +95,10 @@ if(!class_exists('WP_Plugin_Template'))
 
             $room = get_option('global_chat_room');
             $users_iframe = '<iframe id="users" width="150" height="500" frameborder="1" src="http://we.kab.tv/users.html?label='.$room.
-            '&auto_approve=true&from_text='.$username.'" scrolling="yes" marginwidth="10px" marginheight="10px"></iframe>';
-            return 	'<div style="display:block;"><div>'.get_avatar(wp_get_current_user()->ID,80).'</div><div>'.$users_iframe.
+                '&auto_approve=true&from_text='.$username.'&link_pattern='.$user_link.
+                '&css=http://2bb1.net/wp-content/themes/lovestory/nedchat16.10/style/chatstyle.css
+                " scrolling="yes" marginwidth="10px" marginheight="10px"></iframe>';
+            return 	'<div style="display:block;"><div>'.get_avatar(wp_get_current_user()->ID,180).'</div><div>'.$users_iframe.
             		'<iframe width="310" height="500" frameborder="0" src="http://we.kab.tv/?label='.$room.
             		'&auto_approve=true&static_form=true&from_text='.$username.'&name_text='.$username.
                     '&css=http://2bb1.net/wp-content/themes/lovestory/nedchat16.10/style/chatstyle.css
@@ -107,7 +109,7 @@ if(!class_exists('WP_Plugin_Template'))
 
         function set_user_logged_in($user_login, $user) {
 
-            if(get_user_meta($user->ID, "logged_in", true) != "true")
+            if(get_user_meta($user->ID, "logged_in", true) !== "true")
                 if(!update_user_meta($user->ID, 'logged_in', 'true'))
                     wp_die("Failed to add usermeta ", "Fatal");
         }
@@ -116,7 +118,7 @@ if(!class_exists('WP_Plugin_Template'))
         function set_user_logged_out() {
 
             $user = wp_get_current_user();
-            if(get_user_meta($user->ID, "logged_in", true) != "false")
+            if(get_user_meta($user->ID, "logged_in", true) !== "false")
                 if(!update_user_meta($user->ID, 'logged_in', 'false'))
                     wp_die("Failed to add usermeta ", "Fatal");
 
