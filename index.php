@@ -79,34 +79,31 @@ if(!class_exists('WP_Plugin_Template'))
             $userlist="";
             $username = wp_get_current_user()->user_login;
             $users = WP_Plugin_Template::get_all_logged_in_users();
-            $user_link = get_site_url()."/chat/".wp_get_current_user()->ID;
             if(!$username)
                 $username = "User".rand(1,1000);
 
+            $user_link = urlencode(/*get_site_url()*/"http://2bb1.net/%D7%97%D7%93%D7%A8-%D7%A6%D7%98-%D7%A4%D7%A8%D7%98%D7%99/?label=LABEL");
+            
             extract(shortcode_atts(array(
                   'room' => "testroom"
                ), $atts));
-
+/*
             foreach( $users as $user) {
 
                 $userlist .= '<span>' . esc_html( $user->display_name ) . '<br/></span>';
 
             }
-
+ */
             $room = get_option('global_chat_room');
             $users_iframe = '<iframe id="users" width="150" height="500" frameborder="1" src="http://we.kab.tv/users.html?label='.$room.
                 '&auto_approve=true&from_text='.$username.'&link_pattern='.$user_link.
                 '&css=http://2bb1.net/wp-content/themes/lovestory/nedchat16.10/style/chatstyle.css
                 " scrolling="yes" marginwidth="10px" marginheight="10px"></iframe>';
             return 	'<div style="display:block;"><div>'.get_avatar(wp_get_current_user()->ID,180).'</div><div>'.$users_iframe.
-            		'<iframe width="310" height="500" frameborder="0" src="http://we.kab.tv/?label='.$room.
+            		'<iframe id="chat" width="310" height="500" frameborder="0" src="http://we.kab.tv/?label='.$room.
             		'&auto_approve=true&static_form=true&from_text='.$username.'&name_text='.$username.
                     '&css=http://2bb1.net/wp-content/themes/lovestory/nedchat16.10/style/chatstyle.css
-                    " scrolling="yes" marginwidth="0" marginheight="0"></iframe></div><div>'.$userlist.
-            		'</div></div>';
-       }
-
-
+                    " scrolling="yes" marginwidth="0" marginheight="0"></iframe></div><div>'.$userlist.  '</div></div>'; } 
         function set_user_logged_in($user_login, $user) {
 
             if(get_user_meta($user->ID, "logged_in", true) !== "true")
