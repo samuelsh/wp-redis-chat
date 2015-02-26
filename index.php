@@ -101,7 +101,7 @@ if(!class_exists('WP_Plugin_Template'))
                 " scrolling="yes" marginwidth="10px" marginheight="10px"></iframe>';
             return 	'<div style="display:block;"><div>'.get_avatar(wp_get_current_user()->ID,180).'</div><div>'.$users_iframe.
             		'<iframe id="chat" width="310" height="500" frameborder="0" src="http://we.kab.tv/?label='.$room.
-            		'&auto_approve=true&static_form=true&from_text='.$username.'&name_text='.$username.
+            		'&lang=he&auto_approve=true&static_form=true&from_text='.$username.'&name_text='.$username.
                     '&css=http://2bb1.net/wp-content/themes/lovestory/nedchat16.10/style/chatstyle.css
                     " scrolling="yes" marginwidth="0" marginheight="0"></iframe></div><div>'.$userlist.  '</div></div>'; } 
         function set_user_logged_in($user_login, $user) {
